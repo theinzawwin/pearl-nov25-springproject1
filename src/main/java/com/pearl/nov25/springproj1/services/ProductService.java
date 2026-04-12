@@ -1,6 +1,7 @@
 package com.pearl.nov25.springproj1.services;
 
 import com.pearl.nov25.springproj1.dtos.ProductInput;
+import com.pearl.nov25.springproj1.dtos.response.ProductResponse;
 import com.pearl.nov25.springproj1.models.Brand;
 import com.pearl.nov25.springproj1.models.Product;
 import com.pearl.nov25.springproj1.repositories.BrandRepository;
@@ -68,5 +69,29 @@ public class ProductService {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Product not found with id: "+id));
         productRepository.delete(product);
+    }
+
+    //product list by Brand
+    public List<ProductResponse> findByNaming(Long id) {
+        List<Product> products = productRepository.findByProductWithBrandId(id);
+
+        return products.stream().map(p -> {
+            ProductResponse res = new ProductResponse();
+            res.setId(p.getId());
+            res.setName(p.getName());
+            res.setBarcode(p.getBarcode());
+            return res;
+        }).toList();
+    }
+    public List<ProductResponse> findByProduct(String brandName) {
+        List<Product> products = productRepository.findByBrandName(brandName);
+        List<ProductResponse> productResponses = products.stream().map(p->{
+            ProductResponse productResponse = new ProductResponse();
+            productResponse.setId(p.getId());
+            productResponse.setName(p.getName());
+            productResponse.setBarcode(p.getBarcode());
+            return productResponse;
+        }).toList();
+        return productResponses;
     }
 }

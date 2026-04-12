@@ -1,6 +1,7 @@
 package com.pearl.nov25.springproj1.controllers;
 
 import com.pearl.nov25.springproj1.dtos.ProductInput;
+import com.pearl.nov25.springproj1.dtos.response.ProductResponse;
 import com.pearl.nov25.springproj1.models.Product;
 import com.pearl.nov25.springproj1.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.ResourceBundle;
 
 @RestController
 @RequestMapping("/products")
@@ -41,5 +43,14 @@ public class ProductController {
     public ResponseEntity<String> delete (@PathVariable Long id) {
         productService.deleteById(id);
         return ResponseEntity.ok("Product deleted successfully");
+    }
+
+    @GetMapping("find_product/{id}")
+    public ResponseEntity<List<ProductResponse>> findProductByBrand(@PathVariable Long id) {
+        return ResponseEntity.ok(productService.findByNaming(id));
+    }
+    @GetMapping("find_product/name/{brandName}")
+    public ResponseEntity<List<ProductResponse>> findByProduct(@PathVariable String brandName) {
+        return ResponseEntity.ok(productService.findByProduct(brandName));
     }
 }
