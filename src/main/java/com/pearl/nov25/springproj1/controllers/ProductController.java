@@ -2,6 +2,7 @@ package com.pearl.nov25.springproj1.controllers;
 
 
 import com.pearl.nov25.springproj1.dtos.ProductInput;
+import com.pearl.nov25.springproj1.dtos.UpdateProductStatus;
 import com.pearl.nov25.springproj1.dtos.response.ProductResponse;
 import com.pearl.nov25.springproj1.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-@RestController
 @RequestMapping("/products")
+@RestController
 public class ProductController {
 
 
@@ -31,18 +32,18 @@ public class ProductController {
             return ResponseEntity.ok(productService.findProductsByNameContaining(name));
         }
 
-//
-//        @GetMapping("/active-list")
-//        public ResponseEntity<List<BrandResponse>> getActiveBrandList(){
-//            return ResponseEntity.ok(brandService.getActiveBrandList());
-//        }
-//
-//        @PutMapping("/update-status/{id}")
-//        public ResponseEntity<Boolean> updateBrandStatus(@PathVariable(value = "id")Long id,@RequestBody UpdateBrandStatus brandStatus){
-//
-//            return ResponseEntity.ok(brandService.updateBrandStatus(id,brandStatus));
-//        }
-//
+
+        @GetMapping("/active-list")
+        public ResponseEntity<List<ProductResponse>> getActiveProductList(){
+            return ResponseEntity.ok(productService.getActiveProductList());
+        }
+
+        @PutMapping("/update-status/{id}")
+        public ResponseEntity<Boolean> updateBrandStatus(@PathVariable(value = "id")Long id,@RequestBody UpdateProductStatus productStatus){
+
+            return ResponseEntity.ok(productService.updateProductStatus(id,productStatus));
+        }
+
 //        @GetMapping("/find-by-name")
 //        public ResponseEntity<List<BrandResponse>> getBrandByName(@RequestParam("name")String brandName){
 //            return ResponseEntity.ok(brandService.findByNaming(brandName));

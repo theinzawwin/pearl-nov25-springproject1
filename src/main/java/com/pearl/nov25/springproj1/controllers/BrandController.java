@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequestMapping(value = "/brand")
+@RequestMapping(value = "/brands")
 @RestController
 public class BrandController {
 

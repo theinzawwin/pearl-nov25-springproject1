@@ -1,5 +1,6 @@
 package com.pearl.nov25.springproj1.dtos.response;
 
+import com.pearl.nov25.springproj1.models.Brand;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,5 @@ public class ProductResponse implements Serializable {
     private String code;
     private boolean status;
     private String description;
-    private Long brandId;
-    private String brandName;
+    private Brand brand;
 }
