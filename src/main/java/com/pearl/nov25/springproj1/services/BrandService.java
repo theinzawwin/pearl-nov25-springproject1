@@ -6,6 +6,8 @@ import com.pearl.nov25.springproj1.dtos.response.BrandResponse;
 import com.pearl.nov25.springproj1.models.Brand;
 import com.pearl.nov25.springproj1.repositories.BrandRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +17,7 @@ public class BrandService {
     @Autowired
     private BrandRepository brandRepository;
 
+    @CacheEvict(value = "brands", allEntries = true)
     public boolean saveBrand(BrandInput brandInput){
         Brand brand = new Brand();
         brand.setName(brandInput.name());
@@ -23,6 +26,7 @@ public class BrandService {
         return true;
     }
 
+    @Cacheable(value = "brands", key = "#name")
     public List<BrandResponse> findBrandsByNameContaining(String name){
         List<Brand> brands = brandRepository.findByNameContaining(name);
         List<BrandResponse> brandResponses = brands.stream().map(b->{
@@ -35,6 +39,7 @@ public class BrandService {
         return brandResponses;
     }
 
+    @Cacheable(value = "brands", key = "'active-brands'")
     public List<BrandResponse> getActiveBrandList(){
         List<Brand> brands = brandRepository.findByStatusTrue();
         List<BrandResponse> brandResponses = brands.stream().map(b->{
@@ -48,11 +53,13 @@ public class BrandService {
     }
 
 
+    @CacheEvict(value = "brands", allEntries = true)
     public boolean updateBrandStatus(Long id, UpdateBrandStatus brandStatus){
         int updatedCount = brandRepository.updateStatus(id,brandStatus.status());
         return updatedCount > 0;
     }
 
+    @Cacheable(value = "brands", key = "'exact-' + #name")
     public List<BrandResponse> findByNaming(String name){
        // List<Brand> brands = brandRepository.findByNaming(name);
 
