@@ -1,5 +1,6 @@
 package com.pearl.nov25.springproj1.services;
 
+import com.pearl.nov25.springproj1.dtos.ProductDto;
 import com.pearl.nov25.springproj1.dtos.ProductInput;
 import com.pearl.nov25.springproj1.dtos.response.ProductResponse;
 import com.pearl.nov25.springproj1.models.Brand;
@@ -8,6 +9,8 @@ import com.pearl.nov25.springproj1.repositories.BrandRepository;
 import com.pearl.nov25.springproj1.repositories.ProductRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -93,5 +96,10 @@ public class ProductService {
             return productResponse;
         }).toList();
         return productResponses;
+    }
+
+    //pageable
+    public Page<ProductDto> getAllProducts(Pageable pageable) {
+        return productRepository.findAllProductDTO(pageable);
     }
 }

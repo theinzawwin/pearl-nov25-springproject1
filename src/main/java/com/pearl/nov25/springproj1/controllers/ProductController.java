@@ -1,10 +1,14 @@
 package com.pearl.nov25.springproj1.controllers;
 
+import com.pearl.nov25.springproj1.dtos.ProductDto;
 import com.pearl.nov25.springproj1.dtos.ProductInput;
 import com.pearl.nov25.springproj1.dtos.response.ProductResponse;
 import com.pearl.nov25.springproj1.models.Product;
 import com.pearl.nov25.springproj1.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -53,4 +57,10 @@ public class ProductController {
     public ResponseEntity<List<ProductResponse>> findByProduct(@PathVariable String brandName) {
         return ResponseEntity.ok(productService.findByProduct(brandName));
     }
+    @GetMapping("/list-page")
+    public Page<ProductDto> getAllProducts(
+            @PageableDefault(page = 0, size = 10, sort = "id")Pageable pageable ){
+                return productService.getAllProducts(pageable);
+    }
+
 }
