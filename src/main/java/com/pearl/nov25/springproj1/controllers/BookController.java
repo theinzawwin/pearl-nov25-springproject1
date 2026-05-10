@@ -22,7 +22,7 @@ public class BookController {
         return ResponseEntity.ok(bookService.saveBook(bookInput));
     }
     @GetMapping("/list")
-    @PreAuthorize("hasAnyRole('USER', 'MANAGER', 'ADMIN')")
+    @PreAuthorize("hasAnyRole('MANAGER', 'ADMIN')")
     public ResponseEntity<List<Book>> getAllBooks(){
         return ResponseEntity.ok(bookService.getAllBooks());
     }
