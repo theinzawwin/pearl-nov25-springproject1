@@ -52,6 +52,7 @@ public class SecurityConfig {
                 .requestMatchers("/health").permitAll()
                 .requestMatchers("/error").permitAll()
                 .requestMatchers("/favicon.ico").permitAll()
+                    .requestMatchers("/students/**").permitAll()
                 
                 // Admin endpoints
                 .requestMatchers("/admin/**").hasRole("ADMIN")
